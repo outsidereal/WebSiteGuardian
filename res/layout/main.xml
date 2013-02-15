@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+        >
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start"
+                    android:id="@+id/button_start"
+                    android:textColor="#00aa00"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    style="@android:style/Theme.Light"
+                    android:onClick="doStartChecking"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.3"/>
+
+            <Button
+                    style="@android:style/Theme.Light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stop"
+                    android:id="@+id/button_stop"
+                    android:textColor="#ff0007"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:onClick="doStopChecking"
+                    android:layout_weight="0.3"/>
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:text="Refresh"
+                    android:id="@+id/button_refresh"
+                    android:layout_weight="0.3"
+                    style="@android:style/Theme.Light"
+                    android:textSize="20dp"
+                    android:textColor="#d56b01"
+                    android:textStyle="bold"
+                    android:onClick="doRefresh"/>
+
+        </TableRow>
+
+        <ListView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/log_list"
+                android:layout_gravity="center"
+                android:choiceMode="singleChoice"/>
+
+    </LinearLayout>
+</LinearLayout>
+
