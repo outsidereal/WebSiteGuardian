@@ -18,7 +18,7 @@ public class DBAdapter {
     public static final String KEY_STATUS = "status";
     public static final String KEY_CHECKED_TIME = "checked_time";
 
-    private static final String DATABASE_NAME = "WebSiteGuardian4";
+    private static final String DATABASE_NAME = "WebSiteGuardian_v2";
     private static final String DATABASE_TABLE = "SERVER_STATUS";
     private static final int DATABASE_VERSION = 1;
     private static final String SELECT_QUERY = "SELECT * FROM " + DATABASE_TABLE + " ORDER BY " + KEY_CHECKED_TIME + " DESC LIMIT 25 ;";
