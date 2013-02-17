@@ -13,28 +13,26 @@ import android.util.Log;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE =
-            "CREATE TABLE SERVER_STATUS " +
+            "CREATE TABLE " + DBAdapter.DATABASE_NAME +
                     "(_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "server_address TEXT NOT NULL, " +
-                    "status INTEGER NOT NULL, " +
-                    "checked_time INTEGER NOT NULL);";
+                    DBAdapter.KEY_SERVER_ADDRESS + " TEXT NOT NULL, " +
+                    DBAdapter.KEY_STATUS + " INTEGER NOT NULL, " +
+                    DBAdapter.KEY_CHECKED_TIME + " INTEGER NOT NULL);";
 
-    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,  int version) {
+    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
-    // метод вызывается при создании базы данных
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(DATABASE_CREATE);
     }
 
-    // метод вызывается при обновлении базы данных, например, когда вы увеличиваете номер версии базы данных
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-        Log.w(DatabaseHelper.class.getName(), "Upgrading database from version " + oldVersion + " to "
-                + newVersion + ", which will destroy all old data");
-        database.execSQL("DROP TABLE IF EXISTS SERVER_STATUS");
+        Log.w(DatabaseHelper.class.getName(),
+                "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data.");
+        database.execSQL("DROP TABLE IF EXISTS " + DBAdapter.DATABASE_NAME);
         onCreate(database);
     }
 }

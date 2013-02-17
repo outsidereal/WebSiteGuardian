@@ -13,15 +13,17 @@ import android.database.sqlite.SQLiteDatabase;
  * Time: 12:31
  */
 public class DBAdapter {
+    public static final String DATABASE_NAME = "WebSiteGuardian_v2";
+    public static final String DATABASE_TABLE = "SERVER_STATUS";
     public static final String KEY_ID = "_id";
     public static final String KEY_SERVER_ADDRESS = "server_address";
     public static final String KEY_STATUS = "status";
     public static final String KEY_CHECKED_TIME = "checked_time";
 
-    private static final String DATABASE_NAME = "WebSiteGuardian_v2";
-    private static final String DATABASE_TABLE = "SERVER_STATUS";
     private static final int DATABASE_VERSION = 1;
-    private static final String SELECT_QUERY = "SELECT * FROM " + DATABASE_TABLE + " ORDER BY " + KEY_CHECKED_TIME + " DESC LIMIT 25 ;";
+    private static final String SELECT_QUERY
+            = "SELECT * FROM " + DATABASE_TABLE +
+            " ORDER BY " + KEY_CHECKED_TIME + " DESC LIMIT ? ;";
 
     private Context context;
     private SQLiteDatabase database;
@@ -66,8 +68,8 @@ public class DBAdapter {
         return database.insert(DATABASE_TABLE, null, initialValues);
     }
 
-    public Cursor list() {
-        Cursor cursor = database.rawQuery(SELECT_QUERY, null);
+    public Cursor list(int maxElements) {
+        Cursor cursor = database.rawQuery(SELECT_QUERY, new String[]{String.valueOf(maxElements)});
         return cursor;
     }
 

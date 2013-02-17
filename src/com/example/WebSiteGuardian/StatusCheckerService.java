@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import com.example.WebSiteGuardian.db.DBAdapter;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -24,9 +25,9 @@ import java.util.TimerTask;
  * Time: 16:36
  */
 public class StatusCheckerService extends Service {
+    private static final String TAG = "StatusCheckerService";
     private static final int SUCCESS_CODE = 200;
-    private static final int FAILURE_CODE = -1;
-    private static final int NETWORK_FAIL = -2;
+    private static final int NETWORK_FAIL = -1024;
     private static final String DEFAULT_URL = "http://www.playground.ru";
     private static final String DEFAULT_INTERVAL = "5000L";
 
@@ -83,11 +84,11 @@ public class StatusCheckerService extends Service {
         try {
             response = client.execute(request);
         } catch (Exception e) {
-            e.printStackTrace();
-            return FAILURE_CODE;
+            Log.e(TAG, "HTTP client failed.", e);
+            return NETWORK_FAIL;
         }
-        int stat_code = response.getStatusLine().getStatusCode();
-        return stat_code;// == SUCCESS_CODE ? SUCCESS_CODE :FAILURE_CODE;
+        int statusCode = response.getStatusLine().getStatusCode();
+        return statusCode;
     }
 
 
@@ -95,9 +96,13 @@ public class StatusCheckerService extends Service {
         @Override
         public void run() {
             String url = preferences.getString(getString(R.string.pref_url_key), DEFAULT_URL);
+            //get server status
             int status = isOnline(url);
-            int currentTime = (int) (System.currentTimeMillis() / 1000);
-            dbAdapter.insert(url, status, currentTime);
+            if (status != NETWORK_FAIL) {
+                //get checking time in seconds
+                int currentTime = (int) (System.currentTimeMillis() / 1000);
+                dbAdapter.insert(url, status, currentTime);
+            }
         }
     }
 }
