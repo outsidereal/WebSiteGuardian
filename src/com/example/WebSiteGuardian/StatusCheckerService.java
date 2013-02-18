@@ -25,9 +25,9 @@ import java.util.TimerTask;
  * Time: 16:36
  */
 public class StatusCheckerService extends Service {
+    public static final int SUCCESS_CODE = 200;
+    public static final int NETWORK_FAIL = -1024;
     private static final String TAG = "StatusCheckerService";
-    private static final int SUCCESS_CODE = 200;
-    private static final int NETWORK_FAIL = -1024;
     private static final String DEFAULT_URL = "http://www.playground.ru";
     private static final String DEFAULT_INTERVAL = "5000L";
 
@@ -42,7 +42,7 @@ public class StatusCheckerService extends Service {
         timerTask = new MyTimerTask();
         Context context = getApplicationContext();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        dbAdapter = DBAdapter.getInstance(context).open();
+        dbAdapter = DBAdapter.getInstance(context);
     }
 
     @Override
@@ -61,7 +61,6 @@ public class StatusCheckerService extends Service {
     public void onDestroy() {
         super.onDestroy();
         timer.cancel();
-        dbAdapter.close();
     }
 
     public int isOnline(String url) {
@@ -70,7 +69,7 @@ public class StatusCheckerService extends Service {
         try {
             networkInfo = connectivityManager.getActiveNetworkInfo();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "HTTP client failed.", e);
             return NETWORK_FAIL;
         }
         if (networkInfo == null || !networkInfo.isConnected()) {
@@ -90,7 +89,6 @@ public class StatusCheckerService extends Service {
         int statusCode = response.getStatusLine().getStatusCode();
         return statusCode;
     }
-
 
     private class MyTimerTask extends TimerTask {
         @Override

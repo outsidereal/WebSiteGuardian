@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import com.example.WebSiteGuardian.util.DBGuardianConstants;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,50 +14,19 @@ import android.database.sqlite.SQLiteDatabase;
  * Time: 12:31
  */
 public class DBAdapter {
-    public static final String DATABASE_NAME = "WebSiteGuardian_v2";
-    public static final String DATABASE_TABLE = "SERVER_STATUS";
-    public static final String KEY_ID = "_id";
-    public static final String KEY_SERVER_ADDRESS = "server_address";
-    public static final String KEY_STATUS = "status";
-    public static final String KEY_CHECKED_TIME = "checked_time";
-
-    private static final int DATABASE_VERSION = 1;
-    private static final String SELECT_QUERY
-            = "SELECT * FROM " + DATABASE_TABLE +
-            " ORDER BY " + KEY_CHECKED_TIME + " DESC LIMIT ? ;";
-
     private Context context;
     private SQLiteDatabase database;
     private DatabaseHelper dbHelper;
     private static volatile DBAdapter dbAdapter;
-    private boolean isOpen;
 
     public static DBAdapter getInstance(Context context) {
         if (dbAdapter == null) {
             synchronized (DBAdapter.class) {
                 if (dbAdapter == null)
-                    dbAdapter = new DBAdapter(context);
+                    dbAdapter = new DBAdapter(context).open();
             }
         }
         return dbAdapter;
-    }
-
-    private DBAdapter(Context context) {
-        this.context = context;
-    }
-
-    public DBAdapter open() throws SQLException {
-        if (dbHelper == null || database == null) {
-            dbHelper = new DatabaseHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
-            database = dbHelper.getWritableDatabase();
-        }
-        isOpen = true;
-        return this;
-    }
-
-    public void close() {
-        dbHelper.close();
-        isOpen = false;
     }
 
     /**
@@ -65,27 +35,35 @@ public class DBAdapter {
      */
     public long insert(String serverAddress, Integer status, Integer timeInMilliseconds) {
         ContentValues initialValues = createContentValues(serverAddress, status, timeInMilliseconds);
-        return database.insert(DATABASE_TABLE, null, initialValues);
+        return database.insert(DBGuardianConstants.DATABASE_TABLE, null, initialValues);
     }
 
-    public Cursor list(int maxElements) {
-        Cursor cursor = database.rawQuery(SELECT_QUERY, new String[]{String.valueOf(maxElements)});
+    public Cursor list(String query, int maxElements) {
+        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(maxElements)});
         return cursor;
     }
 
     public boolean delete(long id) {
-        return database.delete(DATABASE_TABLE, KEY_ID + "=" + id, null) > 0;
+        return database.delete(DBGuardianConstants.DATABASE_TABLE, DBGuardianConstants.KEY_ID + "=" + id, null) > 0;
     }
 
-    public boolean isOpen() {
-        return isOpen;
+    private DBAdapter(Context context) {
+        this.context = context;
+    }
+
+    private DBAdapter open() throws SQLException {
+        if (dbHelper == null || database == null || !database.isOpen()) {
+            dbHelper = new DatabaseHelper(context, DBGuardianConstants.DATABASE_NAME, null, DBGuardianConstants.DATABASE_VERSION);
+            database = dbHelper.getWritableDatabase();
+        }
+        return this;
     }
 
     private ContentValues createContentValues(String serverAddress, Integer status, Integer timeInMilliseconds) {
         ContentValues values = new ContentValues();
-        values.put(KEY_SERVER_ADDRESS, serverAddress);
-        values.put(KEY_STATUS, status);
-        values.put(KEY_CHECKED_TIME, timeInMilliseconds);
+        values.put(DBGuardianConstants.KEY_SERVER_ADDRESS, serverAddress);
+        values.put(DBGuardianConstants.KEY_STATUS, status);
+        values.put(DBGuardianConstants.KEY_CHECKED_TIME, timeInMilliseconds);
         return values;
     }
 }

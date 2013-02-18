@@ -9,7 +9,7 @@
     <string name="menu_preference_title_command">Settings</string>
     <string name="pref_name">Preferences</string>
     <string name="pref_interval_key">INTERVAL_KEY</string>
-    <string name="pref_interval_title">Time Interval</string>
+    <string name="pref_interval_title">Time Interval (ms)</string>
     <string name="pref_default_time_interval">5000</string>
     <string name="pref_interval_summary">This is an interval between checking server status.</string>
 </resources>

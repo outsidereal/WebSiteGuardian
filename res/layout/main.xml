@@ -39,26 +39,31 @@
                     android:onClick="doStopChecking"
                     android:layout_weight="0.3"/>
 
-            <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:text="Refresh"
-                    android:id="@+id/button_refresh"
-                    android:layout_weight="0.3"
-                    style="@android:style/Theme.Light"
-                    android:textSize="20dp"
-                    android:textColor="#d56b01"
-                    android:textStyle="bold"
-                    android:onClick="doRefresh"/>
-
         </TableRow>
 
-        <ListView
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/log_list"
-                android:layout_gravity="center"
-                android:choiceMode="singleChoice"/>
+        <TabHost
+                android:id="@android:id/tabhost"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <TabWidget
+                        android:id="@android:id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                </TabWidget>
+
+                <FrameLayout
+                        android:id="@android:id/tabcontent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                </FrameLayout>
+            </LinearLayout>
+        </TabHost>
 
     </LinearLayout>
 </LinearLayout>

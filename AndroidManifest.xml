@@ -26,6 +26,10 @@
                 android:label="@string/pref_name">
         </activity>
 
+        <activity android:name="com.example.WebSiteGuardian.AllResultActivity"/>
+        <activity android:name="com.example.WebSiteGuardian.FailedResultActivity"/>
+        <activity android:name="com.example.WebSiteGuardian.SuccessResultActivity"/>
+
         <service android:name="com.example.WebSiteGuardian.StatusCheckerService"></service>
     </application>
 </manifest> 
