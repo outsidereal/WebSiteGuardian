@@ -46,7 +46,7 @@ public class SuccessResultActivity extends Activity {
 
     private void initDataList() {
         DBAdapter dbAdapter = DBAdapter.getInstance(context);
-        Cursor cursor = dbAdapter.list(DBGuardianConstants.SELECT_SUCCESS_RESULT, 25);
+        Cursor cursor = dbAdapter.list(DBGuardianConstants.SELECT_SUCCESS_RESULT, 20);
         startManagingCursor(cursor);
 
         // создааем адаптер и настраиваем список

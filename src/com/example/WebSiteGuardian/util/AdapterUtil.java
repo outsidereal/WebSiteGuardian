@@ -2,14 +2,20 @@ package com.example.WebSiteGuardian.util;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.example.WebSiteGuardian.R;
+import com.example.WebSiteGuardian.StatusCheckerService;
 import com.example.WebSiteGuardian.db.DBAdapter;
 
+import java.net.URL;
 import java.sql.Timestamp;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,8 +26,8 @@ import java.sql.Timestamp;
 public class AdapterUtil {
 
     public static SimpleCursorAdapter createListAdapter(Cursor cursor, Context context) {
-        String[] from = new String[]{DBGuardianConstants.KEY_SERVER_ADDRESS/*, DBAdapter.KEY_STATUS*/, DBGuardianConstants.KEY_CHECKED_TIME};
-        int[] to = new int[]{R.id.text_server/*, R.id.text_status*/, R.id.text_time};
+        String[] from = new String[]{DBGuardianConstants.KEY_SERVER_ADDRESS, DBGuardianConstants.KEY_STATUS, DBGuardianConstants.KEY_CHECKED_TIME};
+        int[] to = new int[]{R.id.text_server, R.id.imageView, R.id.text_time};
 
         // создааем адаптер и настраиваем список
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.item, cursor, from, to) {
@@ -36,6 +42,28 @@ public class AdapterUtil {
                 } catch (Exception e) {
 
                 }
+
+                ImageView img = (ImageView) view.findViewById(R.id.imageView);
+                Cursor cursorLocal = (Cursor)getItem(position);
+                String codeValue = cursorLocal.getString(cursorLocal.getColumnIndex(DBGuardianConstants.KEY_STATUS));
+
+
+                Integer code = Integer.parseInt(codeValue);
+
+                if (code == StatusCheckerService.SUCCESS_CODE){
+                    img.setImageResource(R.drawable.green);
+                }
+                else {
+                    img.setImageResource(R.drawable.red);
+                }
+//                try {
+//                    Bitmap image = BitmapFactory.decodeStream(new URL((String) item.get(IMAGE)).openStream());
+//                    if (image != null)
+//                        img.setImageBitmap(image);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+
                 return view;
             }
         };

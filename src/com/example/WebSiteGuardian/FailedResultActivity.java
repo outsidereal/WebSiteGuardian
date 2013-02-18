@@ -47,7 +47,7 @@ public class FailedResultActivity extends Activity {
 
     private void initDataList() {
         DBAdapter dbAdapter = DBAdapter.getInstance(context);
-        cursor = dbAdapter.list(DBGuardianConstants.SELECT_FAILED_RESULT, 25);
+        cursor = dbAdapter.list(DBGuardianConstants.SELECT_FAILED_RESULT, 20);
         startManagingCursor(cursor);
 
         // создааем адаптер и настраиваем список
