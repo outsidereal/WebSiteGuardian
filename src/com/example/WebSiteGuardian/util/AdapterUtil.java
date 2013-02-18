@@ -2,8 +2,6 @@ package com.example.WebSiteGuardian.util;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,11 +9,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.example.WebSiteGuardian.R;
 import com.example.WebSiteGuardian.StatusCheckerService;
-import com.example.WebSiteGuardian.db.DBAdapter;
 
-import java.net.URL;
 import java.sql.Timestamp;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -44,26 +39,17 @@ public class AdapterUtil {
                 }
 
                 ImageView img = (ImageView) view.findViewById(R.id.imageView);
-                Cursor cursorLocal = (Cursor)getItem(position);
+                Cursor cursorLocal = (Cursor) getItem(position);
                 String codeValue = cursorLocal.getString(cursorLocal.getColumnIndex(DBGuardianConstants.KEY_STATUS));
 
 
                 Integer code = Integer.parseInt(codeValue);
 
-                if (code == StatusCheckerService.SUCCESS_CODE){
+                if (code == StatusCheckerService.SUCCESS_CODE) {
                     img.setImageResource(R.drawable.green);
-                }
-                else {
+                } else {
                     img.setImageResource(R.drawable.red);
                 }
-//                try {
-//                    Bitmap image = BitmapFactory.decodeStream(new URL((String) item.get(IMAGE)).openStream());
-//                    if (image != null)
-//                        img.setImageBitmap(image);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-
                 return view;
             }
         };

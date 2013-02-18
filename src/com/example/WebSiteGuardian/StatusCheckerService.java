@@ -29,7 +29,7 @@ public class StatusCheckerService extends Service {
     public static final int NETWORK_FAIL = -1024;
     private static final String TAG = "StatusCheckerService";
     private static final String DEFAULT_URL = "http://www.playground.ru";
-    private static final String DEFAULT_INTERVAL = "5000L";
+    private static final String DEFAULT_INTERVAL = "5000";
 
     private SharedPreferences preferences;
     private Timer timer;
