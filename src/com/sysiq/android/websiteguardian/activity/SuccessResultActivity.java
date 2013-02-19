@@ -1,4 +1,4 @@
-package com.example.WebSiteGuardian;
+package com.sysiq.android.websiteguardian.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,9 +6,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import com.example.WebSiteGuardian.db.DBAdapter;
-import com.example.WebSiteGuardian.util.AdapterUtil;
-import com.example.WebSiteGuardian.util.DBGuardianConstants;
+import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.db.DBAdapter;
+import com.sysiq.android.websiteguardian.util.AdapterUtil;
+import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,21 +18,19 @@ import java.util.TimerTask;
  * Created with IntelliJ IDEA.
  * User: d.ulanovych
  * Date: 17.02.13
- * Time: 22:15
+ * Time: 22:41
  */
-public class AllResultActivity extends Activity {
+public class SuccessResultActivity extends Activity {
     private static final int REFRESH_TIME = 5000;
-    private Cursor cursor;
     private Context context;
-
+    private volatile boolean needRefresh;
     private Timer timer;
     private RefreshTimerTask task;
-    private volatile boolean needRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.all_tab);
+        setContentView(R.layout.success_tab);
         context = getApplicationContext();
         initDataList();
         task = new RefreshTimerTask();
@@ -48,12 +47,12 @@ public class AllResultActivity extends Activity {
 
     private void initDataList() {
         DBAdapter dbAdapter = DBAdapter.getInstance(context);
-        cursor = dbAdapter.list(DBGuardianConstants.SELECT_ALL_RESULT, 20);
+        Cursor cursor = dbAdapter.list(DBGuardianConstants.SELECT_SUCCESS_RESULT, 20);
         startManagingCursor(cursor);
 
         // создааем адаптер и настраиваем список
         SimpleCursorAdapter adapter = AdapterUtil.createListAdapter(cursor, context);
-        ListView list = (ListView) findViewById(R.id.log_list_all);
+        ListView list = (ListView) findViewById(R.id.log_list_success);
         list.setAdapter(adapter);
     }
 

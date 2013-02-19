@@ -1,4 +1,4 @@
-package com.example.WebSiteGuardian;
+package com.sysiq.android.websiteguardian.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import com.example.WebSiteGuardian.db.DBAdapter;
-import com.example.WebSiteGuardian.util.AdapterUtil;
-import com.example.WebSiteGuardian.util.DBGuardianConstants;
+import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.db.DBAdapter;
+import com.sysiq.android.websiteguardian.util.AdapterUtil;
+import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
 
 import java.util.Timer;
 import java.util.TimerTask;

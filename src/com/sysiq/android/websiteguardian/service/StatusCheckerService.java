@@ -1,4 +1,4 @@
-package com.example.WebSiteGuardian;
+package com.sysiq.android.websiteguardian.service;
 
 import android.app.Service;
 import android.content.Context;
@@ -9,7 +9,8 @@ import android.net.NetworkInfo;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import com.example.WebSiteGuardian.db.DBAdapter;
+import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.db.DBAdapter;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;

@@ -1,11 +1,11 @@
-package com.example.WebSiteGuardian.db;
+package com.sysiq.android.websiteguardian.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import com.example.WebSiteGuardian.util.DBGuardianConstants;
+import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
 
 /**
  * Created with IntelliJ IDEA.

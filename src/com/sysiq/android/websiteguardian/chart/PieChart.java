@@ -1,4 +1,4 @@
-package com.example.WebSiteGuardian;
+package com.sysiq.android.websiteguardian.chart;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,13 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-import com.example.WebSiteGuardian.db.DBAdapter;
-import com.example.WebSiteGuardian.util.DBGuardianConstants;
+import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.db.DBAdapter;
+import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
+import com.sysiq.android.websiteguardian.activity.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;

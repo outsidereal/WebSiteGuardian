@@ -1,4 +1,4 @@
-package com.example.WebSiteGuardian;
+package com.sysiq.android.websiteguardian.activity;
 
 import android.app.TabActivity;
 import android.content.Context;
@@ -8,6 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
+import com.sysiq.android.websiteguardian.chart.PieChart;
+import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.service.StatusCheckerService;
 
 public class MainActivity extends TabActivity {
     private Context context;

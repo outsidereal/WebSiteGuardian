@@ -1,4 +1,4 @@
-package com.example.WebSiteGuardian.util;
+package com.sysiq.android.websiteguardian.util;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.example.WebSiteGuardian.R;
-import com.example.WebSiteGuardian.StatusCheckerService;
+import com.sysiq.android.websiteguardian.service.StatusCheckerService;
 
 import java.sql.Timestamp;
 

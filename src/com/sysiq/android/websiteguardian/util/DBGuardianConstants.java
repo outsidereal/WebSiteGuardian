@@ -1,4 +1,4 @@
-package com.example.WebSiteGuardian.util;
+package com.sysiq.android.websiteguardian.util;
 
 /**
  * Created with IntelliJ IDEA.
