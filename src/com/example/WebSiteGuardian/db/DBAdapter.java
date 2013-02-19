@@ -43,6 +43,11 @@ public class DBAdapter {
         return cursor;
     }
 
+    public Cursor list(String query) {
+        Cursor cursor = database.rawQuery(query, null);
+        return cursor;
+    }
+
     public boolean delete(long id) {
         return database.delete(DBGuardianConstants.DATABASE_TABLE, DBGuardianConstants.KEY_ID + "=" + id, null) > 0;
     }

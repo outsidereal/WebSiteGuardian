@@ -29,4 +29,8 @@ public class DBGuardianConstants {
     public static final String SELECT_FAILED_RESULT
             = "SELECT * FROM " + DATABASE_TABLE + " WHERE " + KEY_STATUS + " !=200 " +
             " ORDER BY " + KEY_CHECKED_TIME + " DESC LIMIT ?1 ;";
+    public static final String SELECT_UNLIMITED_FAILED_RESULT
+            = "SELECT * FROM " + DATABASE_TABLE + " WHERE " + KEY_STATUS + " !=200 ;";
+    public static final String SELECT_UNLIMITED_SUCCESS_RESULT
+            = "SELECT * FROM " + DATABASE_TABLE + " WHERE " + KEY_STATUS + " =200 ;";
 }
