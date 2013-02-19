@@ -77,17 +77,20 @@ public class MainActivity extends TabActivity {
         TabHost.TabSpec tabSpec;
 
         tabSpec = tabHost.newTabSpec("tag1");
-        tabSpec.setIndicator("Total");
+        View view1 = getLayoutInflater().inflate(R.layout.all_tab_header, null);
+        tabSpec.setIndicator(view1);
         tabSpec.setContent(new Intent(this, AllResultActivity.class));
         tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec("tag2");
-        tabSpec.setIndicator("Success");
+        View view2 = getLayoutInflater().inflate(R.layout.success_tab_header, null);
+        tabSpec.setIndicator(view2);
         tabSpec.setContent(new Intent(this, SuccessResultActivity.class));
         tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec("tag3");
-        tabSpec.setIndicator("Failed");
+        View view3 = getLayoutInflater().inflate(R.layout.failed_tab_header, null);
+        tabSpec.setIndicator(view3);
         tabSpec.setContent(new Intent(this, FailedResultActivity.class));
         tabHost.addTab(tabSpec);
     }

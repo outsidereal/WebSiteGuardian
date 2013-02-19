@@ -12,4 +12,7 @@
     <string name="pref_interval_title">Time Interval (ms)</string>
     <string name="pref_default_time_interval">5000</string>
     <string name="pref_interval_summary">This is an interval between checking server status.</string>
+    <string name="total">TOTAL</string>
+    <string name="failed">FAILED</string>
+    <string name="success">SUCCESS</string>
 </resources>

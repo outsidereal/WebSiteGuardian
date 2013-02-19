@@ -2,6 +2,7 @@ package com.example.WebSiteGuardian.util;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import java.sql.Timestamp;
  * Time: 22:49
  */
 public class AdapterUtil {
+    private static final String TAG = "AdapterUtil";
 
     public static SimpleCursorAdapter createListAdapter(Cursor cursor, Context context) {
         String[] from = new String[]{DBGuardianConstants.KEY_SERVER_ADDRESS, DBGuardianConstants.KEY_STATUS, DBGuardianConstants.KEY_CHECKED_TIME};
@@ -33,16 +35,14 @@ public class AdapterUtil {
                 try {
                     String time = textView.getText().toString();
                     Timestamp date = new Timestamp(Long.parseLong(time) * 1000);
-                    textView.setText(date.toString());
+                    textView.setText(date.toLocaleString());
                 } catch (Exception e) {
-
+                    Log.e(TAG, "Troubles with date translating.");
                 }
 
                 ImageView img = (ImageView) view.findViewById(R.id.imageView);
                 Cursor cursorLocal = (Cursor) getItem(position);
                 String codeValue = cursorLocal.getString(cursorLocal.getColumnIndex(DBGuardianConstants.KEY_STATUS));
-
-
                 Integer code = Integer.parseInt(codeValue);
 
                 if (code == StatusCheckerService.SUCCESS_CODE) {
