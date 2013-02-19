@@ -15,4 +15,6 @@
     <string name="total">TOTAL</string>
     <string name="failed">FAILED</string>
     <string name="success">SUCCESS</string>
+    <string name="menu_history_of_checks">History</string>
+    <string name="menu_availability_pie">Availability</string>
 </resources>

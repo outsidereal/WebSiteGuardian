@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import com.example.WebSiteGuardian.db.DBAdapter;
 import com.example.WebSiteGuardian.util.AdapterUtil;
 import com.example.WebSiteGuardian.util.DBGuardianConstants;
@@ -32,7 +31,7 @@ public class AllResultActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.total_tab);
+        setContentView(R.layout.all_tab);
         context = getApplicationContext();
         initDataList();
         task = new RefreshTimerTask();

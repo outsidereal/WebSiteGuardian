@@ -34,11 +34,18 @@ public class MainActivity extends TabActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.menu_preferences:
+            case R.id.menu_preferences: {
                 //Show the site chooser activity
                 Intent intent = new Intent(this, PreferencesActivity.class);
                 startActivity(intent);
                 return true;
+            }
+
+            case R.id.menu_availability: {
+                Intent intent = new Intent(this, PieChart.class);
+                startActivity(intent);
+                return true;
+            }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -89,7 +96,7 @@ public class MainActivity extends TabActivity {
         tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec("tag3");
-        View view3 = getLayoutInflater().inflate(R.layout.failed_tab_header, null);
+        View view3 = getLayoutInflater().inflate(R.layout.failure_tab_header, null);
         tabSpec.setIndicator(view3);
         tabSpec.setContent(new Intent(this, FailedResultActivity.class));
         tabHost.addTab(tabSpec);

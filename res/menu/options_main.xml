@@ -7,4 +7,11 @@
             android:titleCondensed="@string/menu_preference_title_command"
             android:icon="@android:drawable/stat_notify_voicemail">
     </item>
+
+    <item
+            android:id="@+id/menu_availability"
+            android:title="@string/menu_preference_title"
+            android:titleCondensed="@string/menu_availability_pie"
+            android:icon="@android:drawable/stat_notify_chat">
+    </item>
 </menu>
