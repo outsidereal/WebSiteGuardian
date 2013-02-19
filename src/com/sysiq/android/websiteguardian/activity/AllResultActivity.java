@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.application.WebSiteGuardianApplication;
 import com.sysiq.android.websiteguardian.db.DBAdapter;
 import com.sysiq.android.websiteguardian.util.AdapterUtil;
 import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
@@ -22,22 +23,18 @@ import java.util.TimerTask;
  */
 public class AllResultActivity extends Activity {
     private static final int REFRESH_TIME = 5000;
-    private Cursor cursor;
-    private Context context;
-
     private Timer timer;
-    private RefreshTimerTask task;
     private volatile boolean needRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_tab);
-        context = getApplicationContext();
+
         initDataList();
-        task = new RefreshTimerTask();
+        RefreshTimerTask refreshTimerTask = new RefreshTimerTask();
         timer = new Timer();
-        timer.schedule(task, REFRESH_TIME, REFRESH_TIME);
+        timer.schedule(refreshTimerTask, REFRESH_TIME, REFRESH_TIME);
     }
 
     @Override
@@ -48,12 +45,10 @@ public class AllResultActivity extends Activity {
     }
 
     private void initDataList() {
-        DBAdapter dbAdapter = DBAdapter.getInstance(context);
-        cursor = dbAdapter.list(DBGuardianConstants.SELECT_ALL_RESULT, 20);
+        DBAdapter dbAdapter = ((WebSiteGuardianApplication)getApplication()).getDbAdapter();
+        Cursor cursor = dbAdapter.list(DBGuardianConstants.SELECT_ALL_RESULT, 20);
         startManagingCursor(cursor);
-
-        // создааем адаптер и настраиваем список
-        SimpleCursorAdapter adapter = AdapterUtil.createListAdapter(cursor, context);
+        SimpleCursorAdapter adapter = AdapterUtil.createListAdapter(cursor, getApplicationContext());
         ListView list = (ListView) findViewById(R.id.log_list_all);
         list.setAdapter(adapter);
     }

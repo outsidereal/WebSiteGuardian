@@ -11,9 +11,10 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.activity.MainActivity;
+import com.sysiq.android.websiteguardian.application.WebSiteGuardianApplication;
 import com.sysiq.android.websiteguardian.db.DBAdapter;
 import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
-import com.sysiq.android.websiteguardian.activity.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +31,8 @@ import java.net.URLConnection;
 public class PieChart extends Activity {
     private final static String urlGoogleChart = "http://chart.apis.google.com/chart";
     private final static String TAG = "PieChart";
+    private final static int CHART_IMAGE_WIDTH = 700;
+    private final static int CHART_IMAGE_HEIGHT = 400;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +52,8 @@ public class PieChart extends Activity {
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_history: {
-                //Show the site chooser activity
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                Intent startMainActivityIntent = new Intent(this, MainActivity.class);
+                startActivity(startMainActivityIntent);
                 return true;
             }
             default:
@@ -67,14 +69,12 @@ public class PieChart extends Activity {
     }
 
     private void sendRequestForPie() {
-        DBAdapter adapter = DBAdapter.getInstance(this);
+        DBAdapter adapter = ((WebSiteGuardianApplication) getApplication()).getDbAdapter();
         Integer successCount = adapter.list(DBGuardianConstants.SELECT_UNLIMITED_SUCCESS_RESULT).getCount();
         Integer failedCount = adapter.list(DBGuardianConstants.SELECT_UNLIMITED_FAILED_RESULT).getCount();
 
         ImageView image = (ImageView) findViewById(R.id.image_pie);
-        Integer height = 400;//image.getHeight();
-        Integer width = 700;//image.getWidth();
-        String requestString = buildRequestString(width, height, successCount, failedCount);
+        String requestString = buildRequestString(CHART_IMAGE_WIDTH, CHART_IMAGE_HEIGHT, successCount, failedCount);
 
         Bitmap bitmap = loadChart(requestString);
         if (bitmap == null) {
@@ -96,7 +96,7 @@ public class PieChart extends Activity {
         Bitmap bm = null;
         InputStream inputStream;
         try {
-            inputStream = OpenHttpConnection(urlRqs);
+            inputStream = openHttpConnection(urlRqs);
             bm = BitmapFactory.decodeStream(inputStream);
             inputStream.close();
         } catch (IOException e) {
@@ -105,7 +105,7 @@ public class PieChart extends Activity {
         return bm;
     }
 
-    private InputStream OpenHttpConnection(String strURL) throws IOException {
+    private InputStream openHttpConnection(String strURL) throws IOException {
         InputStream is = null;
         URL url = new URL(strURL);
         URLConnection urlConnection = url.openConnection();

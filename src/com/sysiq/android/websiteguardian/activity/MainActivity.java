@@ -8,8 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
-import com.sysiq.android.websiteguardian.chart.PieChart;
 import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.application.WebSiteGuardianApplication;
+import com.sysiq.android.websiteguardian.chart.PieChart;
 import com.sysiq.android.websiteguardian.service.StatusCheckerService;
 
 public class MainActivity extends TabActivity {
@@ -21,9 +22,8 @@ public class MainActivity extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
         context = getApplicationContext();
-        initTabs();
+        initResultTabs();
     }
 
     @Override
@@ -37,18 +37,15 @@ public class MainActivity extends TabActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.menu_preferences: {
+            case R.id.menu_preferences: 
                 //Show the site chooser activity
-                Intent intent = new Intent(this, PreferencesActivity.class);
-                startActivity(intent);
+                Intent preferenceActivityIntent = new Intent(this, PreferencesActivity.class);
+                startActivity(preferenceActivityIntent);
                 return true;
-            }
-
-            case R.id.menu_availability: {
-                Intent intent = new Intent(this, PieChart.class);
-                startActivity(intent);
+            case R.id.menu_availability: 
+                Intent pieChartActivityIntent = new Intent(this, PieChart.class);
+                startActivity(pieChartActivityIntent);
                 return true;
-            }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -59,8 +56,8 @@ public class MainActivity extends TabActivity {
             @Override
             public void run() {
                 if (!serviceRunning) {
-                    Intent service = new Intent(context, StatusCheckerService.class);
-                    context.startService(service);
+                    Intent startStatusCheckerServiceIntent = new Intent(context, StatusCheckerService.class);
+                    context.startService(startStatusCheckerServiceIntent);
                     serviceRunning = true;
                 }
             }
@@ -72,35 +69,32 @@ public class MainActivity extends TabActivity {
             @Override
             public void run() {
                 if (serviceRunning) {
-                    Intent service = new Intent(context, StatusCheckerService.class);
-                    context.stopService(service);
+                    Intent stopStatusCheckerServiceIntent = new Intent(context, StatusCheckerService.class);
+                    context.stopService(stopStatusCheckerServiceIntent);
                 }
             }
         });
     }
 
-    private void initTabs() {
-        // получаем TabHost
+    private void initResultTabs() {
         TabHost tabHost = getTabHost();
-        // инициализация была выполнена в getTabHost
-        // метод setup вызывать не нужно
         TabHost.TabSpec tabSpec;
 
         tabSpec = tabHost.newTabSpec("tag1");
-        View view1 = getLayoutInflater().inflate(R.layout.all_tab_header, null);
-        tabSpec.setIndicator(view1);
+        View allTabHeader = getLayoutInflater().inflate(R.layout.all_tab_header, null);
+        tabSpec.setIndicator(allTabHeader);
         tabSpec.setContent(new Intent(this, AllResultActivity.class));
         tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec("tag2");
-        View view2 = getLayoutInflater().inflate(R.layout.success_tab_header, null);
-        tabSpec.setIndicator(view2);
+        View successTabHeader = getLayoutInflater().inflate(R.layout.success_tab_header, null);
+        tabSpec.setIndicator(successTabHeader);
         tabSpec.setContent(new Intent(this, SuccessResultActivity.class));
         tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec("tag3");
-        View view3 = getLayoutInflater().inflate(R.layout.failure_tab_header, null);
-        tabSpec.setIndicator(view3);
+        View failedTabHeader = getLayoutInflater().inflate(R.layout.failure_tab_header, null);
+        tabSpec.setIndicator(failedTabHeader);
         tabSpec.setContent(new Intent(this, FailedResultActivity.class));
         tabHost.addTab(tabSpec);
     }

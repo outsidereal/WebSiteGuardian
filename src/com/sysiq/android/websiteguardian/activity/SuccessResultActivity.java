@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.application.WebSiteGuardianApplication;
 import com.sysiq.android.websiteguardian.db.DBAdapter;
 import com.sysiq.android.websiteguardian.util.AdapterUtil;
 import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
@@ -22,18 +23,15 @@ import java.util.TimerTask;
  */
 public class SuccessResultActivity extends Activity {
     private static final int REFRESH_TIME = 5000;
-    private Context context;
     private volatile boolean needRefresh;
     private Timer timer;
-    private RefreshTimerTask task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.success_tab);
-        context = getApplicationContext();
         initDataList();
-        task = new RefreshTimerTask();
+        RefreshTimerTask task = new RefreshTimerTask();
         timer = new Timer();
         timer.schedule(task, REFRESH_TIME, REFRESH_TIME);
     }
@@ -46,12 +44,10 @@ public class SuccessResultActivity extends Activity {
     }
 
     private void initDataList() {
-        DBAdapter dbAdapter = DBAdapter.getInstance(context);
+        DBAdapter dbAdapter = ((WebSiteGuardianApplication)getApplication()).getDbAdapter();
         Cursor cursor = dbAdapter.list(DBGuardianConstants.SELECT_SUCCESS_RESULT, 20);
         startManagingCursor(cursor);
-
-        // создааем адаптер и настраиваем список
-        SimpleCursorAdapter adapter = AdapterUtil.createListAdapter(cursor, context);
+        SimpleCursorAdapter adapter = AdapterUtil.createListAdapter(cursor, getApplicationContext());
         ListView list = (ListView) findViewById(R.id.log_list_success);
         list.setAdapter(adapter);
     }

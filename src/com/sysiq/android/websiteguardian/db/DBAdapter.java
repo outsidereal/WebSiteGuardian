@@ -29,10 +29,6 @@ public class DBAdapter {
         return dbAdapter;
     }
 
-    /**
-     * создать новый элемент.
-     * если создан успешно - возвращается номер строки id  * иначе -1
-     */
     public long insert(String serverAddress, Integer status, Integer timeInMilliseconds) {
         ContentValues initialValues = createContentValues(serverAddress, status, timeInMilliseconds);
         return database.insert(DBGuardianConstants.DATABASE_TABLE, null, initialValues);

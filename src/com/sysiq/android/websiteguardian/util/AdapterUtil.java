@@ -26,29 +26,28 @@ public class AdapterUtil {
         String[] from = new String[]{DBGuardianConstants.KEY_SERVER_ADDRESS, DBGuardianConstants.KEY_STATUS, DBGuardianConstants.KEY_CHECKED_TIME};
         int[] to = new int[]{R.id.text_server, R.id.imageView, R.id.text_time};
 
-        // создааем адаптер и настраиваем список
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.item, cursor, from, to) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
-                TextView textView = (TextView) view.findViewById(R.id.text_time);
+                TextView timeView = (TextView) view.findViewById(R.id.text_time);
                 try {
-                    String time = textView.getText().toString();
+                    String time = timeView.getText().toString();
                     Timestamp date = new Timestamp(Long.parseLong(time) * 1000);
-                    textView.setText(date.toLocaleString());
+                    timeView.setText(date.toLocaleString());
                 } catch (Exception e) {
-                    Log.e(TAG, "Troubles with date translating.");
+                    Log.e(TAG, "Troubles with date translating.", e);
                 }
 
-                ImageView img = (ImageView) view.findViewById(R.id.imageView);
+                ImageView statusImageView = (ImageView) view.findViewById(R.id.imageView);
                 Cursor cursorLocal = (Cursor) getItem(position);
                 String codeValue = cursorLocal.getString(cursorLocal.getColumnIndex(DBGuardianConstants.KEY_STATUS));
-                Integer code = Integer.parseInt(codeValue);
+                Integer statusCode = Integer.parseInt(codeValue);
 
-                if (code == StatusCheckerService.SUCCESS_CODE) {
-                    img.setImageResource(R.drawable.green);
+                if (statusCode == StatusCheckerService.SUCCESS_CODE) {
+                    statusImageView.setImageResource(R.drawable.green);
                 } else {
-                    img.setImageResource(R.drawable.red);
+                    statusImageView.setImageResource(R.drawable.red);
                 }
                 return view;
             }

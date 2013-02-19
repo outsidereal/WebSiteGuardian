@@ -27,6 +27,7 @@ import java.util.TimerTask;
  */
 public class StatusCheckerService extends Service {
     public static final int SUCCESS_CODE = 200;
+    public static final int FAIL_CODE = -12;
     public static final int NETWORK_FAIL = -1024;
     private static final String TAG = "StatusCheckerService";
     private static final String DEFAULT_URL = "http://www.playground.ru";
@@ -61,7 +62,6 @@ public class StatusCheckerService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        timer.cancel();
     }
 
     public int isOnline(String url) {
@@ -85,7 +85,7 @@ public class StatusCheckerService extends Service {
             response = client.execute(request);
         } catch (Exception e) {
             Log.e(TAG, "HTTP client failed.", e);
-            return NETWORK_FAIL;
+            return FAIL_CODE;
         }
         int statusCode = response.getStatusLine().getStatusCode();
         return statusCode;
