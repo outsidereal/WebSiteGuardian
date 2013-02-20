@@ -1,15 +1,12 @@
 package com.sysiq.android.websiteguardian.util;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.example.WebSiteGuardian.R;
-import com.sysiq.android.websiteguardian.service.StatusCheckerService;
 
 import java.sql.Timestamp;
 
@@ -22,11 +19,11 @@ import java.sql.Timestamp;
 public class AdapterUtil {
     private static final String TAG = "AdapterUtil";
 
-    public static SimpleCursorAdapter createListAdapter(Cursor cursor, Context context) {
+    public static SimpleCursorAdapter createListAdapter(Context context) {
         String[] from = new String[]{DBGuardianConstants.KEY_SERVER_ADDRESS, DBGuardianConstants.KEY_STATUS, DBGuardianConstants.KEY_CHECKED_TIME};
         int[] to = new int[]{R.id.text_server, R.id.imageView, R.id.text_time};
 
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.item, cursor, from, to, 0) {
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.item, null, from, to, 0) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);

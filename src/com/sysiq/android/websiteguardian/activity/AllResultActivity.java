@@ -1,29 +1,15 @@
 package com.sysiq.android.websiteguardian.activity;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.app.LoaderManager;
-import android.content.Context;
 import android.content.CursorLoader;
-import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import com.example.WebSiteGuardian.R;
-import com.sysiq.android.websiteguardian.application.WebSiteGuardianApplication;
-import com.sysiq.android.websiteguardian.db.DBAdapter;
 import com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider;
-import com.sysiq.android.websiteguardian.db.domain.ServerStatusTable;
 import com.sysiq.android.websiteguardian.util.AdapterUtil;
-import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,46 +21,40 @@ import java.util.TimerTask;
  * Time: 22:15
  */
 public class AllResultActivity extends ListActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-    private static final int REFRESH_TIME = 5000;
+    private static final int REFRESH_TIME = 30000;
     private Timer timer;
+    private Loader loader;
+    private SimpleCursorAdapter adapter;
     private volatile boolean needRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_tab);
-
         initDataList();
-        //RefreshTimerTask refreshTimerTask = new RefreshTimerTask();
-        //timer = new Timer();
-        //timer.schedule(refreshTimerTask, REFRESH_TIME, REFRESH_TIME);
-
         this.getListView().setDividerHeight(2);
         registerForContextMenu(getListView());
+
+        RefreshTimerTask refreshTimerTask = new RefreshTimerTask();
+        timer = new Timer();
+        timer.schedule(refreshTimerTask, REFRESH_TIME, REFRESH_TIME);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (needRefresh)
-            initDataList();
+            loader.forceLoad();
     }
 
     private void initDataList() {
-        //DBAdapter dbAdapter = ((WebSiteGuardianApplication) getApplication()).getDbAdapter();
-        //Cursor cursor = dbAdapter.list(DBGuardianConstants.SELECT_ALL_RESULT, 20);
-        //startManagingCursor(cursor);
-        getLoaderManager().initLoader(0, null, this);
-        adapter = AdapterUtil.createListAdapter(null, getApplicationContext());
+        loader = getLoaderManager().initLoader(0, null, this);
+        adapter = AdapterUtil.createListAdapter(getApplicationContext());
         setListAdapter(adapter);
     }
 
-    private SimpleCursorAdapter adapter;
-
-
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        String[] projection = {ServerStatusTable.COLUMN_SERVER_ADDRESS, ServerStatusTable.COLUMN_STATUS, ServerStatusTable.COLUMN_CHECKED_TIME};
         CursorLoader cursorLoader = new CursorLoader(this, GuardianContentProvider.CONTENT_URI, null, null, null, null);
         return cursorLoader;
     }

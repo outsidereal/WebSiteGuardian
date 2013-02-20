@@ -15,16 +15,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.WebSiteGuardian.R;
 import com.sysiq.android.websiteguardian.activity.MainActivity;
-import com.sysiq.android.websiteguardian.application.WebSiteGuardianApplication;
-import com.sysiq.android.websiteguardian.db.DBAdapter;
-import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
+import com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider;
+import com.sysiq.android.websiteguardian.db.domain.ServerStatusTable;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Created with IntelliJ IDEA.
@@ -73,9 +71,11 @@ public class PieChart extends Activity {
     }
 
     private void sendRequestForPie() {
-        DBAdapter adapter = ((WebSiteGuardianApplication) getApplication()).getDbAdapter();
-        Integer successCount = adapter.list(DBGuardianConstants.SELECT_UNLIMITED_SUCCESS_RESULT).getCount();
-        Integer failedCount = adapter.list(DBGuardianConstants.SELECT_UNLIMITED_FAILED_RESULT).getCount();
+        GuardianContentProvider contentProvider = new GuardianContentProvider();
+        Integer successCount = contentProvider.query(GuardianContentProvider.CONTENT_URI, null,
+                ServerStatusTable.COLUMN_STATUS + "=" + ServerStatusTable.SUCCESS_STATUS, null, null).getCount();
+        Integer failedCount = contentProvider.query(GuardianContentProvider.CONTENT_URI, null,
+                ServerStatusTable.COLUMN_STATUS + "!=" + ServerStatusTable.SUCCESS_STATUS, null, null).getCount();
 
         ImageView image = (ImageView) findViewById(R.id.image_pie);
         String requestString = buildRequestString(CHART_IMAGE_WIDTH, CHART_IMAGE_HEIGHT, successCount, failedCount);
@@ -128,7 +128,7 @@ public class PieChart extends Activity {
         }
 
         URL url = new URL(strURL);
-        HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             is = new BufferedInputStream(urlConnection.getInputStream());
         } catch (Exception ex) {

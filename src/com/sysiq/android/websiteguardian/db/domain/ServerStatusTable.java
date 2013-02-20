@@ -2,6 +2,7 @@ package com.sysiq.android.websiteguardian.db.domain;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import com.example.WebSiteGuardian.R;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,6 +16,7 @@ public class ServerStatusTable {
     public static final String COLUMN_SERVER_ADDRESS = "server_address";
     public static final String COLUMN_STATUS = "status";
     public static final String COLUMN_CHECKED_TIME = "checked_time";
+    public static final int SUCCESS_STATUS = R.drawable.green;
     public static final String DATABASE_CREATE =
             "CREATE TABLE " + DATABASE_TABLE +
                     "(" +

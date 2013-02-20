@@ -8,7 +8,7 @@
     <ListView
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:id="@+id/log_list_failed"
+            android:id="@android:id/list"
             android:layout_gravity="center"
             android:choiceMode="singleChoice">
     </ListView>

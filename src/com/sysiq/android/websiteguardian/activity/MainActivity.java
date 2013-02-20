@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
 import com.example.WebSiteGuardian.R;
-import com.sysiq.android.websiteguardian.application.WebSiteGuardianApplication;
 import com.sysiq.android.websiteguardian.chart.PieChart;
 import com.sysiq.android.websiteguardian.service.StatusCheckerService;
 

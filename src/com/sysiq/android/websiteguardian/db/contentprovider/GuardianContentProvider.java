@@ -150,6 +150,14 @@ public class GuardianContentProvider extends ContentProvider {
         return rowsUpdated;
     }
 
+    public ContentValues createContentValues(String serverAddress, Integer status, Integer timeInMilliseconds) {
+        ContentValues values = new ContentValues();
+        values.put(ServerStatusTable.COLUMN_SERVER_ADDRESS, serverAddress);
+        values.put(ServerStatusTable.COLUMN_STATUS, status);
+        values.put(ServerStatusTable.COLUMN_CHECKED_TIME, timeInMilliseconds);
+        return values;
+    }
+
     private void checkColumns(String[] projection) {
         String[] available = {ServerStatusTable.COLUMN_SERVER_ADDRESS, ServerStatusTable.COLUMN_STATUS,
                 ServerStatusTable.COLUMN_CHECKED_TIME, ServerStatusTable.COLUMN_ID};

@@ -1,6 +1,7 @@
 package com.sysiq.android.websiteguardian.service;
 
 import android.app.Service;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +11,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import com.example.WebSiteGuardian.R;
-import com.sysiq.android.websiteguardian.db.DBAdapter;
+import com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -33,10 +34,10 @@ public class StatusCheckerService extends Service {
     private static final String DEFAULT_URL = "http://www.playground.ru";
     private static final String DEFAULT_INTERVAL = "5000";
 
+    private GuardianContentProvider contentProvider;
     private SharedPreferences preferences;
     private Timer timer;
     private MyTimerTask timerTask;
-    private DBAdapter dbAdapter;
 
     @Override
     public void onCreate() {
@@ -44,7 +45,7 @@ public class StatusCheckerService extends Service {
         timerTask = new MyTimerTask();
         Context context = getApplicationContext();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        dbAdapter = DBAdapter.getInstance(context);
+        contentProvider = new GuardianContentProvider();
     }
 
     @Override
@@ -62,6 +63,12 @@ public class StatusCheckerService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        timer.cancel();
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        return super.onUnbind(intent);
     }
 
     public int isOnline(String url) {
@@ -102,7 +109,8 @@ public class StatusCheckerService extends Service {
                 int currentTime = (int) (System.currentTimeMillis() / 1000);
                 //translate status to resource type
                 status = status == SUCCESS_CODE ? R.drawable.green : R.drawable.red;
-                dbAdapter.insert(url, status, currentTime);
+                ContentValues dataRecord = contentProvider.createContentValues(url, status, currentTime);
+                contentProvider.insert(GuardianContentProvider.CONTENT_URI, dataRecord);
             }
         }
     }

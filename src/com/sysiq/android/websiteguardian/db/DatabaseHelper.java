@@ -3,9 +3,7 @@ package com.sysiq.android.websiteguardian.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import com.sysiq.android.websiteguardian.db.domain.ServerStatusTable;
-import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
 
 /**
  * Created with IntelliJ IDEA.
