@@ -45,9 +45,9 @@ public class AllResultActivity extends ListActivity implements LoaderManager.Loa
         setContentView(R.layout.all_tab);
 
         initDataList();
-        RefreshTimerTask refreshTimerTask = new RefreshTimerTask();
-        timer = new Timer();
-        timer.schedule(refreshTimerTask, REFRESH_TIME, REFRESH_TIME);
+        //RefreshTimerTask refreshTimerTask = new RefreshTimerTask();
+        //timer = new Timer();
+        //timer.schedule(refreshTimerTask, REFRESH_TIME, REFRESH_TIME);
 
         this.getListView().setDividerHeight(2);
         registerForContextMenu(getListView());
@@ -61,10 +61,11 @@ public class AllResultActivity extends ListActivity implements LoaderManager.Loa
     }
 
     private void initDataList() {
-        DBAdapter dbAdapter = ((WebSiteGuardianApplication) getApplication()).getDbAdapter();
-        Cursor cursor = dbAdapter.list(DBGuardianConstants.SELECT_ALL_RESULT, 20);
-        startManagingCursor(cursor);
-        adapter = AdapterUtil.createListAdapter(cursor, getApplicationContext());
+        //DBAdapter dbAdapter = ((WebSiteGuardianApplication) getApplication()).getDbAdapter();
+        //Cursor cursor = dbAdapter.list(DBGuardianConstants.SELECT_ALL_RESULT, 20);
+        //startManagingCursor(cursor);
+        getLoaderManager().initLoader(0, null, this);
+        adapter = AdapterUtil.createListAdapter(null, getApplicationContext());
         setListAdapter(adapter);
     }
 
@@ -73,8 +74,8 @@ public class AllResultActivity extends ListActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        String[] projection = {ServerStatusTable.COLUMN_ID, ServerStatusTable.COLUMN_STATUS};
-        CursorLoader cursorLoader = new CursorLoader(this, GuardianContentProvider.CONTENT_URI, projection, null, null, null);
+        String[] projection = {ServerStatusTable.COLUMN_SERVER_ADDRESS, ServerStatusTable.COLUMN_STATUS, ServerStatusTable.COLUMN_CHECKED_TIME};
+        CursorLoader cursorLoader = new CursorLoader(this, GuardianContentProvider.CONTENT_URI, null, null, null, null);
         return cursorLoader;
     }
 

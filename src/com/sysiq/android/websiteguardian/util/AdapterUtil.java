@@ -26,7 +26,7 @@ public class AdapterUtil {
         String[] from = new String[]{DBGuardianConstants.KEY_SERVER_ADDRESS, DBGuardianConstants.KEY_STATUS, DBGuardianConstants.KEY_CHECKED_TIME};
         int[] to = new int[]{R.id.text_server, R.id.imageView, R.id.text_time};
 
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.item, cursor, from, to) {
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.item, cursor, from, to, 0) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
@@ -37,17 +37,6 @@ public class AdapterUtil {
                     timeView.setText(date.toLocaleString());
                 } catch (Exception e) {
                     Log.e(TAG, "Troubles with date translating.", e);
-                }
-
-                ImageView statusImageView = (ImageView) view.findViewById(R.id.imageView);
-                Cursor cursorLocal = (Cursor) getItem(position);
-                String codeValue = cursorLocal.getString(cursorLocal.getColumnIndex(DBGuardianConstants.KEY_STATUS));
-                Integer statusCode = Integer.parseInt(codeValue);
-
-                if (statusCode == StatusCheckerService.SUCCESS_CODE) {
-                    statusImageView.setImageResource(R.drawable.green);
-                } else {
-                    statusImageView.setImageResource(R.drawable.red);
                 }
                 return view;
             }

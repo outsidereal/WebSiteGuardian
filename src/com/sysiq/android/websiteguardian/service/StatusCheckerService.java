@@ -100,6 +100,8 @@ public class StatusCheckerService extends Service {
             if (status != NETWORK_FAIL) {
                 //get checking time in seconds
                 int currentTime = (int) (System.currentTimeMillis() / 1000);
+                //translate status to resource type
+                status = status == SUCCESS_CODE ? R.drawable.green : R.drawable.red;
                 dbAdapter.insert(url, status, currentTime);
             }
         }
