@@ -4,12 +4,13 @@
           android:versionCode="1"
           android:versionName="1.0">
 
-    <uses-sdk android:minSdkVersion="10"/>
+    <uses-sdk android:minSdkVersion="11"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application android:label="@string/app_name"
                  android:name="com.sysiq.android.websiteguardian.application.WebSiteGuardianApplication">
@@ -34,5 +35,10 @@
         <activity android:name="com.sysiq.android.websiteguardian.chart.PieChart"/>
 
         <service android:name="com.sysiq.android.websiteguardian.service.StatusCheckerService"></service>
+
+        <provider
+                android:name="com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider"
+                android:authorities="com.sysiq.android.websiteguardian.db.contentprovider" >
+        </provider>
     </application>
 </manifest> 

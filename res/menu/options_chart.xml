@@ -3,7 +3,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
             android:id="@+id/menu_history"
-            android:title="@string/menu_preference_title"
+            android:title="@string/menu_history_of_checks"
             android:titleCondensed="@string/menu_history_of_checks"
             android:icon="@android:drawable/ic_menu_recent_history">
     </item>

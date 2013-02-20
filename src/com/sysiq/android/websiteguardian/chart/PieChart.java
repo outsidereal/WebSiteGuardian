@@ -1,9 +1,12 @@
 package com.sysiq.android.websiteguardian.chart;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +19,7 @@ import com.sysiq.android.websiteguardian.application.WebSiteGuardianApplication;
 import com.sysiq.android.websiteguardian.db.DBAdapter;
 import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -97,6 +101,9 @@ public class PieChart extends Activity {
         InputStream inputStream;
         try {
             inputStream = openHttpConnection(urlRqs);
+            if (inputStream == null)
+                throw new IOException();
+
             bm = BitmapFactory.decodeStream(inputStream);
             inputStream.close();
         } catch (IOException e) {
@@ -107,17 +114,23 @@ public class PieChart extends Activity {
 
     private InputStream openHttpConnection(String strURL) throws IOException {
         InputStream is = null;
-        URL url = new URL(strURL);
-        URLConnection urlConnection = url.openConnection();
 
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo;
         try {
-            HttpURLConnection httpConn = (HttpURLConnection) urlConnection;
-            httpConn.setRequestMethod("GET");
-            httpConn.connect();
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+        } catch (Exception e) {
+            Log.e(TAG, "HTTP client failed.", e);
+            return is;
+        }
+        if (networkInfo == null || !networkInfo.isConnected()) {
+            return is;
+        }
 
-            if (httpConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                is = httpConn.getInputStream();
-            }
+        URL url = new URL(strURL);
+        HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+        try {
+            is = new BufferedInputStream(urlConnection.getInputStream());
         } catch (Exception ex) {
             Log.e(TAG, "Http Connection Failed..", ex);
         }

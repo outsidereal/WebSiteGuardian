@@ -54,7 +54,7 @@ public class DBAdapter {
 
     private DBAdapter open() throws SQLException {
         if (dbHelper == null || database == null || !database.isOpen()) {
-            dbHelper = new DatabaseHelper(context, DBGuardianConstants.DATABASE_NAME, null, DBGuardianConstants.DATABASE_VERSION);
+            dbHelper = new DatabaseHelper(context);
             database = dbHelper.getWritableDatabase();
         }
         return this;

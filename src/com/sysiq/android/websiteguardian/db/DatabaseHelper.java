@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import com.sysiq.android.websiteguardian.db.domain.ServerStatusTable;
 import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
 
 /**
@@ -13,21 +14,20 @@ import com.sysiq.android.websiteguardian.util.DBGuardianConstants;
  * Time: 11:54
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    private static final String DATABASE_NAME = "WebSiteGuardian_v3.db";
+    private static final int DATABASE_VERSION = 1;
+
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(DBGuardianConstants.DATABASE_CREATE);
+        ServerStatusTable.onCreate(database);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-        Log.w(DatabaseHelper.class.getName(),
-                "Upgrading database from version " + oldVersion + " to "
-                        + newVersion + ", which will destroy all old data.");
-        database.execSQL("DROP TABLE IF EXISTS " + DBGuardianConstants.DATABASE_NAME);
-        onCreate(database);
+        ServerStatusTable.onUpgrade(database, oldVersion, newVersion);
     }
 }

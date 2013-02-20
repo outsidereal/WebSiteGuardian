@@ -10,7 +10,7 @@
 
     <item
             android:id="@+id/menu_availability"
-            android:title="@string/menu_preference_title"
+            android:title="@string/menu_availability_pie"
             android:titleCondensed="@string/menu_availability_pie"
             android:icon="@android:drawable/stat_notify_chat">
     </item>
