@@ -1,6 +1,8 @@
 package com.sysiq.android.websiteguardian.util;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,21 +26,20 @@ public class AdapterUtil {
         String[] from = new String[]{ServerStatusTable.COLUMN_SERVER_ADDRESS, ServerStatusTable.COLUMN_STATUS, ServerStatusTable.COLUMN_CHECKED_TIME};
         int[] to = new int[]{R.id.text_server, R.id.imageView, R.id.text_time};
 
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.item, null, from, to, 0) {
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.item, null, from, to, 0);
+
+        adapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView timeView = (TextView) view.findViewById(R.id.text_time);
-                try {
-                    String time = timeView.getText().toString();
-                    Timestamp date = new Timestamp(Long.parseLong(time) * 1000);
-                    timeView.setText(date.toLocaleString());
-                } catch (Exception e) {
-                    Log.e(TAG, "Troubles with date translating.", e);
+            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+                String columnName = cursor.getColumnName(columnIndex);
+                if (columnName.equals(ServerStatusTable.COLUMN_CHECKED_TIME)) {
+                    TextView textView = (TextView) view.findViewById(R.id.text_time);
+                    textView.setText(DateUtils.getRelativeTimeSpanString(cursor.getLong(columnIndex) * 1000, System.currentTimeMillis(), 1000));
+                    return true;
                 }
-                return view;
+                return false;
             }
-        };
+        });
         return adapter;
     }
 }
