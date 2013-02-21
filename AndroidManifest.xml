@@ -23,20 +23,16 @@
             </intent-filter>
         </activity>
 
-        <activity
-                android:name="com.sysiq.android.websiteguardian.activity.PreferencesActivity"
-                android:label="@string/pref_name">
-        </activity>
+        <activity android:name=".activity.PreferencesActivity" android:label="@string/pref_name"/>
+        <activity android:name=".activity.AllResultActivity"/>
+        <activity android:name=".activity.FailedResultActivity"/>
+        <activity android:name=".activity.SuccessResultActivity"/>
+        <activity android:name=".activity.PieChartActivity"/>
 
-        <activity android:name="com.sysiq.android.websiteguardian.activity.AllResultActivity"/>
-        <activity android:name="com.sysiq.android.websiteguardian.activity.FailedResultActivity"/>
-        <activity android:name="com.sysiq.android.websiteguardian.activity.SuccessResultActivity"/>
-        <activity android:name="com.sysiq.android.websiteguardian.chart.PieChart"/>
-
-        <service android:name="com.sysiq.android.websiteguardian.service.StatusCheckerService"></service>
+        <service android:name=".service.StatusCheckerService"></service>
 
         <provider
-                android:name="com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider"
+                android:name=".db.contentprovider.GuardianContentProvider"
                 android:authorities="com.sysiq.android.websiteguardian.db.contentprovider">
         </provider>
     </application>

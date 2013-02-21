@@ -16,10 +16,14 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
  * Date: 21.02.13
  * Time: 12:56
  */
+
+/**
+ * In general this class provided as an example. Comments also are left.
+ * Base example see here http://danielkvist.net/code/piechart-with-achartengine-in-android
+ */
 public class PieChartView extends GraphicalView {
     public static final int COLOR_GREEN = Color.parseColor("#62c51a");
     public static final int COLOR_RED = Color.parseColor("#ff1111");
-    public static final int COLOR_GRAY = Color.parseColor("#808800");
 
     /**
      * Constructor that only calls the super method. It is not used to instantiate the object from outside of this
@@ -64,7 +68,6 @@ public class PieChartView extends GraphicalView {
         defaultRenderer.setShowLabels(true);
         defaultRenderer.setLabelsTextSize(24);
         defaultRenderer.setShowLegend(false);
-        defaultRenderer.setBackgroundColor(COLOR_GRAY);
         return defaultRenderer;
     }
 

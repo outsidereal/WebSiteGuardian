@@ -1,4 +1,4 @@
-package com.sysiq.android.websiteguardian.chart;
+package com.sysiq.android.websiteguardian.activity;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import com.sysiq.android.websiteguardian.R;
 import com.sysiq.android.websiteguardian.activity.MainActivity;
+import com.sysiq.android.websiteguardian.chart.PieChartView;
 import com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider;
 import com.sysiq.android.websiteguardian.db.domain.ServerStatusTable;
 import org.achartengine.GraphicalView;
@@ -19,7 +20,7 @@ import org.achartengine.GraphicalView;
  * Date: 19.02.13
  * Time: 14:36
  */
-public class PieChart extends Activity {
+public class PieChartActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

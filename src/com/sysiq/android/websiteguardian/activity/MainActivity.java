@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
 import com.sysiq.android.websiteguardian.R;
-import com.sysiq.android.websiteguardian.chart.PieChart;
 import com.sysiq.android.websiteguardian.service.StatusCheckerService;
 
 public class MainActivity extends TabActivity {
@@ -42,7 +41,7 @@ public class MainActivity extends TabActivity {
                 startActivity(preferenceActivityIntent);
                 return true;
             case R.id.menu_availability: 
-                Intent pieChartActivityIntent = new Intent(this, PieChart.class);
+                Intent pieChartActivityIntent = new Intent(this, PieChartActivity.class);
                 startActivity(pieChartActivityIntent);
                 return true;
             default:

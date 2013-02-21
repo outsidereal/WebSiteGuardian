@@ -30,8 +30,7 @@ public class ServerStatusTable {
         database.execSQL(DATABASE_CREATE);
     }
 
-    public static void onUpgrade(SQLiteDatabase database, int oldVersion,
-                                 int newVersion) {
+    public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         Log.w(ServerStatusTable.class.getName(), "Upgrading database from version "
                 + oldVersion + " to " + newVersion
                 + ", which will destroy all old data");
