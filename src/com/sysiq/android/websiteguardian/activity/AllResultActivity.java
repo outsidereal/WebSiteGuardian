@@ -7,7 +7,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.SimpleCursorAdapter;
-import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.R;
 import com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider;
 import com.sysiq.android.websiteguardian.util.AdapterUtil;
 

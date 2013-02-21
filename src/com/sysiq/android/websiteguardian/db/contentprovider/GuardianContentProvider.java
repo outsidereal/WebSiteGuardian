@@ -22,12 +22,12 @@ import java.util.HashSet;
  * Time: 12:51
  */
 public class GuardianContentProvider extends ContentProvider {
-    private DatabaseHelper database;
+    private static final String AUTHORITY = "com.sysiq.android.websiteguardian.db.contentprovider";
+    private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    private static final String BASE_PATH = "statuses";
     private static final int TODOS = 10;
     private static final int TODO_ID = 20;
-    private static final String AUTHORITY = "com.sysiq.android.websiteguardian.db.contentprovider";
-    private static final String BASE_PATH = "statuses";
-    private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    private DatabaseHelper database;
 
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/statuses";
@@ -46,11 +46,8 @@ public class GuardianContentProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        // Uisng SQLiteQueryBuilder instead of query() method
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        // Check if the caller has requested a column which does not exists
         checkColumns(projection);
-        // Set the table
         queryBuilder.setTables(ServerStatusTable.DATABASE_TABLE);
 
         int uriType = sURIMatcher.match(uri);
@@ -150,7 +147,7 @@ public class GuardianContentProvider extends ContentProvider {
         return rowsUpdated;
     }
 
-    public ContentValues createContentValues(String serverAddress, Integer status, Integer timeInMilliseconds) {
+    public static ContentValues createContentValues(String serverAddress, Integer status, Integer timeInMilliseconds) {
         ContentValues values = new ContentValues();
         values.put(ServerStatusTable.COLUMN_SERVER_ADDRESS, serverAddress);
         values.put(ServerStatusTable.COLUMN_STATUS, status);

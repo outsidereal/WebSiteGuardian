@@ -2,7 +2,7 @@ package com.sysiq.android.websiteguardian.db.domain;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.R;
 
 /**
  * Created with IntelliJ IDEA.

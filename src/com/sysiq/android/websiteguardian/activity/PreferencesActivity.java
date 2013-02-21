@@ -2,7 +2,7 @@ package com.sysiq.android.websiteguardian.activity;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.R;
 
 /**
  * Created with IntelliJ IDEA.

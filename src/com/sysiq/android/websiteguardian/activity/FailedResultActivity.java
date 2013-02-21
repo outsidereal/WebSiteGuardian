@@ -7,8 +7,9 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.SimpleCursorAdapter;
-import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.R;
 import com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider;
+import com.sysiq.android.websiteguardian.db.domain.ServerStatusTable;
 import com.sysiq.android.websiteguardian.util.AdapterUtil;
 
 import java.util.Timer;
@@ -55,8 +56,8 @@ public class FailedResultActivity extends ListActivity implements LoaderManager.
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        //TODO: conditions
-        CursorLoader cursorLoader = new CursorLoader(this, GuardianContentProvider.CONTENT_URI, null, null, null, null);
+        CursorLoader cursorLoader = new CursorLoader(this, GuardianContentProvider.CONTENT_URI, null,
+                ServerStatusTable.COLUMN_STATUS + "!=" + ServerStatusTable.SUCCESS_STATUS, null, null);
         return cursorLoader;
     }
 

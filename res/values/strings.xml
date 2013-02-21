@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name"><i>WebSiteGuardian</i></string>
+    <string name="app_name"><i>WebSiteGuardian_3</i></string>
     <string name="pref_default_site_url">http://sport.ua</string>
     <string name="pref_url_title">Site URL</string>
     <string name="pref_url_key">PREF_URL</string>

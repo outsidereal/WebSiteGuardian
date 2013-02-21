@@ -1,6 +1,6 @@
 package com.sysiq.android.websiteguardian.util;
 
-import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.R;
 
 /**
  * Created with IntelliJ IDEA.

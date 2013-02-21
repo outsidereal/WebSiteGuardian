@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import com.example.WebSiteGuardian.R;
+import com.sysiq.android.websiteguardian.R;
 
 import java.sql.Timestamp;
 
