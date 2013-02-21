@@ -3,15 +3,11 @@ package com.sysiq.android.websiteguardian.util;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.sysiq.android.websiteguardian.R;
 import com.sysiq.android.websiteguardian.db.domain.ServerStatusTable;
-
-import java.sql.Timestamp;
 
 /**
  * Created with IntelliJ IDEA.
