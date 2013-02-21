@@ -11,9 +11,6 @@ import com.sysiq.android.websiteguardian.R;
 import com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider;
 import com.sysiq.android.websiteguardian.util.AdapterUtil;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 /**
  * Created with IntelliJ IDEA.
  * User: d.ulanovych
@@ -21,11 +18,7 @@ import java.util.TimerTask;
  * Time: 22:15
  */
 public class AllResultActivity extends ListActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-    private static final int REFRESH_TIME = 30000;
-    private Timer timer;
-    private Loader loader;
     private SimpleCursorAdapter adapter;
-    private volatile boolean needRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +27,10 @@ public class AllResultActivity extends ListActivity implements LoaderManager.Loa
         initDataList();
         this.getListView().setDividerHeight(2);
         registerForContextMenu(getListView());
-
-        RefreshTimerTask refreshTimerTask = new RefreshTimerTask();
-        timer = new Timer();
-        timer.schedule(refreshTimerTask, REFRESH_TIME, REFRESH_TIME);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (needRefresh)
-            loader.forceLoad();
     }
 
     private void initDataList() {
-        loader = getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().initLoader(0, null, this);
         adapter = AdapterUtil.createListAdapter(getApplicationContext());
         setListAdapter(adapter);
     }
@@ -67,11 +49,5 @@ public class AllResultActivity extends ListActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         adapter.swapCursor(null);
-    }
-
-    private class RefreshTimerTask extends TimerTask {
-        public void run() {
-            needRefresh = true;
-        }
     }
 }

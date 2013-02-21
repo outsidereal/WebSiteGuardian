@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.sysiq.android.websiteguardian.R;
+import com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider;
+import com.sysiq.android.websiteguardian.db.domain.ServerStatusTable;
 
 import java.sql.Timestamp;
 
@@ -20,7 +22,7 @@ public class AdapterUtil {
     private static final String TAG = "AdapterUtil";
 
     public static SimpleCursorAdapter createListAdapter(Context context) {
-        String[] from = new String[]{DBGuardianConstants.KEY_SERVER_ADDRESS, DBGuardianConstants.KEY_STATUS, DBGuardianConstants.KEY_CHECKED_TIME};
+        String[] from = new String[]{ServerStatusTable.COLUMN_SERVER_ADDRESS, ServerStatusTable.COLUMN_STATUS, ServerStatusTable.COLUMN_CHECKED_TIME};
         int[] to = new int[]{R.id.text_server, R.id.imageView, R.id.text_time};
 
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.item, null, from, to, 0) {
