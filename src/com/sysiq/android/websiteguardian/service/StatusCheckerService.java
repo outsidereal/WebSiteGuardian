@@ -89,7 +89,7 @@ public class StatusCheckerService extends Service {
         try {
             response = client.execute(request);
         } catch (Exception e) {
-            Log.e(TAG, "HTTP client failed.", e);
+            Log.d(TAG, "Host "+url +" don't responded.");
             return FAIL_CODE;
         }
         int statusCode = response.getStatusLine().getStatusCode();

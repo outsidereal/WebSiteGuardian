@@ -23,19 +23,21 @@ import java.util.HashSet;
  */
 public class GuardianContentProvider extends ContentProvider {
     private static final String AUTHORITY = "com.sysiq.android.websiteguardian.db.contentprovider";
-    private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     private static final String BASE_PATH = "statuses";
-    private static final int TODOS = 10;
-    private static final int TODO_ID = 20;
+    private static final int URI_STATUSES = 1;
+    private static final int URI_STATUSES_ID = 2;
     private DatabaseHelper database;
 
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/statuses";
     public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/status";
 
+    private static final UriMatcher sURIMatcher;
+
     static {
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH, TODOS);
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", TODO_ID);
+        sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH, URI_STATUSES);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", URI_STATUSES_ID);
     }
 
     @Override
@@ -52,9 +54,9 @@ public class GuardianContentProvider extends ContentProvider {
 
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
-            case TODOS:
+            case URI_STATUSES:
                 break;
-            case TODO_ID:
+            case URI_STATUSES_ID:
                 // Adding the ID to the original query
                 queryBuilder.appendWhere(ServerStatusTable.COLUMN_ID + "=" + uri.getLastPathSegment());
                 break;
@@ -81,7 +83,7 @@ public class GuardianContentProvider extends ContentProvider {
         SQLiteDatabase sqlDB = database.getWritableDatabase();
         long id = 0;
         switch (uriType) {
-            case TODOS:
+            case URI_STATUSES:
                 id = sqlDB.insert(ServerStatusTable.DATABASE_TABLE, null, contentValues);
                 break;
             default:
@@ -98,15 +100,13 @@ public class GuardianContentProvider extends ContentProvider {
         int rowsDeleted = 0;
 
         switch (uriType) {
-            case TODOS:
+            case URI_STATUSES:
                 rowsDeleted = sqlDB.delete(ServerStatusTable.DATABASE_TABLE, selection, selectionArgs);
                 break;
-            case TODO_ID:
+            case URI_STATUSES_ID:
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
-                    rowsDeleted = sqlDB.delete(ServerStatusTable.DATABASE_TABLE,
-                            ServerStatusTable.COLUMN_ID + "=" + id,
-                            null);
+                    rowsDeleted = sqlDB.delete(ServerStatusTable.DATABASE_TABLE, ServerStatusTable.COLUMN_ID + "=" + id, null);
                 } else {
                     rowsDeleted = sqlDB.delete(ServerStatusTable.DATABASE_TABLE, ServerStatusTable.COLUMN_ID + "=" + id
                             + " and " + selection, selectionArgs);
@@ -127,10 +127,10 @@ public class GuardianContentProvider extends ContentProvider {
         int rowsUpdated = 0;
 
         switch (uriType) {
-            case TODOS:
+            case URI_STATUSES:
                 rowsUpdated = sqlDB.update(ServerStatusTable.DATABASE_TABLE, values, selection, selectionArgs);
                 break;
-            case TODO_ID:
+            case URI_STATUSES_ID:
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
                     rowsUpdated = sqlDB.update(ServerStatusTable.DATABASE_TABLE, values,

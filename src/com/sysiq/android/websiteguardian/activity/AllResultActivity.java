@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.SimpleCursorAdapter;
 import com.sysiq.android.websiteguardian.R;
 import com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider;
+import com.sysiq.android.websiteguardian.db.domain.ServerStatusTable;
 import com.sysiq.android.websiteguardian.util.AdapterUtil;
 
 /**
@@ -37,7 +38,8 @@ public class AllResultActivity extends ListActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        CursorLoader cursorLoader = new CursorLoader(this, GuardianContentProvider.CONTENT_URI, null, null, null, null);
+        String sortOrder = ServerStatusTable.COLUMN_CHECKED_TIME + " DESC LIMIT 25";
+        CursorLoader cursorLoader = new CursorLoader(this, GuardianContentProvider.CONTENT_URI, null, null, null, sortOrder);
         return cursorLoader;
     }
 

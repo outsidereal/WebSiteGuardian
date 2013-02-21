@@ -38,8 +38,9 @@ public class SuccessResultActivity extends ListActivity implements LoaderManager
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        CursorLoader cursorLoader = new CursorLoader(this, GuardianContentProvider.CONTENT_URI, null,
-                ServerStatusTable.COLUMN_STATUS + "=" + ServerStatusTable.SUCCESS_STATUS, null, null);
+        String sortOrder = ServerStatusTable.COLUMN_CHECKED_TIME + " DESC LIMIT 25";
+        String selection = ServerStatusTable.COLUMN_STATUS + "=" + ServerStatusTable.SUCCESS_STATUS;
+        CursorLoader cursorLoader = new CursorLoader(this, GuardianContentProvider.CONTENT_URI, null, selection, null, sortOrder);
         return cursorLoader;
     }
 
