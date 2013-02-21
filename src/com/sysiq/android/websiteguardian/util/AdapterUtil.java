@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.sysiq.android.websiteguardian.R;
-import com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider;
 import com.sysiq.android.websiteguardian.db.domain.ServerStatusTable;
 
 import java.sql.Timestamp;

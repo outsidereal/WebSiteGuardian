@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import com.sysiq.android.websiteguardian.R;
-import com.sysiq.android.websiteguardian.activity.MainActivity;
 import com.sysiq.android.websiteguardian.chart.PieChartView;
 import com.sysiq.android.websiteguardian.db.contentprovider.GuardianContentProvider;
 import com.sysiq.android.websiteguardian.db.domain.ServerStatusTable;
